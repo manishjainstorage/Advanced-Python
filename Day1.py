@@ -108,3 +108,35 @@ result = df.mean()
 print(result)
 
 ___________________________________________________________________________
+
+#Using timing functions
+
+import numpy as np
+import pandas as pd
+import modin.pandas as mpd
+import time
+
+#create a large dataframe
+
+nrows = 10_000_000
+data = np.random.rand(nrows,5)
+
+#Timing with Pandas
+
+start_time = time.time()
+df_pandas = pd.DataFrame(data)
+mean_pandas = df_pandas.mean()
+end_time = time.time()
+pandas_time = end_time - start_time
+print(f"Time taken with Pandas: {pandas_time} seconds")
+
+#Timing with Modin
+
+start_time = time.time()
+df_modin = mpd.DataFrame(data)
+mean_modin = df_modin.mean()
+end_time = time.time()
+modin_time = end_time - start_time
+print(f"Time taken with Modin: {modin_time} seconds")
+#################################################################3
+

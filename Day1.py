@@ -41,4 +41,34 @@ df.to_excel('compressed_file.xlsx.gz', compression='gzip')
 
 import gc
 gc.collect()
+################################################################
+
+# drop columns where more then 50% of the values are missing
+
+df_cleaned = df.dropna(thresh=0.5*len(df), axis=1)
+
+# Visualize the % of missing values in the columns
+
+missing_percentage = (df_cleaned.isnull().sum() / len(df_cleaned)) * 100
+print(missing_percentage)
+
+# missingvalues from heatmap
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(df_cleaned.isnull(), cmap='viridis')
+plt.title('Missing Values Heatmap')
+plt.show()
+
+#using missingno
+
+import missingno as msno
+
+msno.matrix(df_cleaned)
+plt.show()
+
+#############################################################33
+
 

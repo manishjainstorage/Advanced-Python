@@ -140,3 +140,39 @@ modin_time = end_time - start_time
 print(f"Time taken with Modin: {modin_time} seconds")
 #################################################################3
 
+#Using timing functions
+
+import numpy as np
+import pandas as pd
+import modin.pandas as mpd
+import time
+
+#create a large dataframe
+
+nrows = 10_000_000
+data = np.random.rand(nrows,5)
+
+#Timing with Pandas
+
+start_time = time.time()
+df_pandas = pd.DataFrame(data)
+mean_pandas = df_pandas.mean()
+end_time = time.time()
+pandas_time = end_time - start_time
+print(f"Time taken with Pandas: {pandas_time} seconds")
+
+#Timing with Modin
+
+import os
+os.environ["MODIN_ENGINE"] = "dask"
+os.environ["MODIN_NUM_PARTITIONS"] = "3"
+
+start_time = time.time()
+df_modin = mpd.DataFrame(data)
+mean_modin = df_modin.mean()
+end_time = time.time()
+modin_time = end_time - start_time
+print(f"Time taken with Modin: {modin_time} seconds")
+print("Number of partitions used :",os.environ.get("MODIN_NUM_PARTITIONS"))
+
+#############################################################3

@@ -176,3 +176,32 @@ print(f"Time taken with Modin: {modin_time} seconds")
 print("Number of partitions used :",os.environ.get("MODIN_NUM_PARTITIONS"))
 
 #############################################################3
+
+#using joblib
+
+from joblib import Parallel, delayed
+
+def square(x):
+  return x**2
+
+result = Parallel(n_jobs=5)(delayed(square)(i) for i in range(10))
+
+print(result)
+
+#########################################################3
+# using multiprocessing
+
+import multiprocessing
+
+def square(x):
+  return x**2
+
+if __name__ == '__main__':
+  numbers = [1,2,3,4,5]
+  #create a pool of processors
+  with multiprocessing.Pool(processes = 5) as pool:
+    result = pool.map(square , numbers)
+  print(result)
+############################################################
+
+df.memory_usage(deep=True)

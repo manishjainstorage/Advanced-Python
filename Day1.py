@@ -30,6 +30,8 @@ report.show_html("Target_Analysis_Report.html")
 df = df.convert_dtypes()
 df.info()
 
-
+chunksize = 10
+for chunk in pd.read_csv("/content/Ajio.csv" , encoding = "unicode_escape" , chunksize=chunksize):
+  print(chunk)
 
 

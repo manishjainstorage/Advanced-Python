@@ -34,4 +34,11 @@ chunksize = 10
 for chunk in pd.read_csv("/content/Ajio.csv" , encoding = "unicode_escape" , chunksize=chunksize):
   print(chunk)
 
+######################################################################
+
+df.info(memory_usage='deep')
+df.to_excel('compressed_file.xlsx.gz', compression='gzip')
+
+import gc
+gc.collect()
 

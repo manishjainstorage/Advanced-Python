@@ -96,3 +96,15 @@ print("\nDataFrame after Backward Fill:")
 print(df_backward_filled)
 
 #####################################################3
+
+import numpy as np
+import modin.pandas as pd
+
+#create a large dataframe
+df = pd.DataFrame(np.random.randn(10000000, 10), columns=[f'col_{i}' for i in range(10)])
+
+#perform some operations
+result = df.mean()
+print(result)
+
+___________________________________________________________________________

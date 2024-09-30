@@ -27,7 +27,8 @@ report.show_html("Target_Analysis_Report.html")
 
 #####################################################################
 
-
+df = df.convert_dtypes()
+df.info()
 
 
 

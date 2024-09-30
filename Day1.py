@@ -21,6 +21,13 @@ report = sv.analyze(df)
 report.show_html("Sweetviz_Report.html")
 ########################################################################
 
+# Analyzing features against a target variable
+report = sv.analyze(df, target_feat='Sales')
+report.show_html("Target_Analysis_Report.html")
+
+#####################################################################
+
+
 
 
 

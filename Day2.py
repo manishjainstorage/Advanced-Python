@@ -141,6 +141,23 @@ print(c)
 _______________________________________________________________________________
 
 
+"""Broadcasting
+
+Broadcasting allows NumPy to perform arithmetic operations on arrays of 
+different shapes without the need for explicit loops."""
+
+import numpy as np
+
+# Create a 1D array and a 2D array
+a = np.array([1, 2, 3,4])
+b = np.array([[10], [20], [30]])
+
+# Broadcasting the 1D array to match the shape of the 2D array
+result = a + b
+print(result)
+
+________________________________________________________________
+
 
 
 

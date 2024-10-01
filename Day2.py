@@ -34,3 +34,15 @@ start_time = time.time()
 df_polars = pl.read_excel("https://github.com/manishjainstorage/Advanced-Python/raw/main/StockMarketData-13krows.xlsx")
 print(f'Polars load time: {time.time() - start_time} seconds')
 ___________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+

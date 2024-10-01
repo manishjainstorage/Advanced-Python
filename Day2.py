@@ -218,3 +218,25 @@ for i in range(len(a)):
 
 # Use vectorized operations:
 c = a + b  # Faster and more concise
+
+_________________________________________________________________________
+
+"""Pre-allocate Arrays
+
+Description: When creating arrays, pre-allocate them with the desired shape 
+and size to avoid resizing during operations. """
+
+# Instead of dynamically growing an array:
+result = []
+for i in range(1000):
+    result.append(i**2)
+result = np.array(result)  # Conversion to NumPy array afterward
+
+# Pre-allocate:
+result = np.empty(1000)
+for i in range(1000):
+    result[i] = i**2
+
+____________________________________________________________________________
+
+

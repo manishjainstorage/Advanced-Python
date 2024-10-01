@@ -108,6 +108,20 @@ df
 
 ____________________________________________________________________________________
 
+df = pl.DataFrame({
+    "time": [1, 2, 3, 4, 5],
+    "value": [10, 20, 30, 40, 50]
+})
+
+# Dynamic window function with a window size of 2
+df = df.with_columns([
+    pl.col("value").rolling_sum(window_size=3).alias("rolling_sum")
+])
+
+df
+
+_______________________________________________________________________________
+
 
 
 

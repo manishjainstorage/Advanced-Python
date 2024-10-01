@@ -92,6 +92,22 @@ print(f"Polars result: {polars_result}, Time taken: {polars_time:.2f} seconds")
 ________________________________________________________________________________________
 
 
+df = pl.DataFrame({
+    "a": [1, 2, 3],
+    "b": [4, 5, 6],
+    "c": [7, 8, 9]
+})
+
+# Apply a chain of expressions
+df = df.with_columns([
+    (pl.col("a") * pl.col("b")).alias("a_times_b"),
+    (pl.col("c") + 5).alias("c_plus_5")
+])
+
+df
+
+____________________________________________________________________________________
+
 
 
 

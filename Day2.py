@@ -240,3 +240,17 @@ for i in range(1000):
 ____________________________________________________________________________
 
 
+"""Avoid Unnecessary Copies
+
+Description: Be mindful of operations that create copies of arrays 
+(e.g., slicing or reshaping). Use views when possible."""
+
+# Slicing creates a view, while some operations create copies
+a = np.array([1, 2, 3, 4, 5])
+b = a[1:3]  # b is a view, changes in a reflect in b
+
+# Use np.copy() if you need an independent copy
+c = np.copy(a[1:3])  # Creates a new array
+
+____________________________________________________________________________
+

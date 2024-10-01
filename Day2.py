@@ -321,3 +321,57 @@ my_function()
 _________________________________________________________________________________________
 
 
+""" 3. Code Optimization techniques
+
+Once you identify bottlenecks, consider the following optimization strategies:
+
+a. Optimize Algorithms
+
+Choose Efficient Algorithms: Evaluate whether a more efficient algorithm can be used.
+
+Algorithm Complexity: Analyze the time complexity of your algorithms and look for improvements.
+b. Utilize Vectorization
+
+Replace explicit loops with vectorized operations using libraries like NumPy."""
+
+import numpy as np
+import time
+
+# Original algorithm: O(n^2) complexity
+def sum_of_squares_nested(n):
+    total = 0
+    for i in range(n):
+        for j in range(n):
+            total += i**2
+    return total
+
+# Optimized algorithm: O(n) complexity
+def sum_of_squares_optimized(n):
+    return n * (n - 1) * (2 * n - 1) // 6  # Formula for sum of squares
+
+# Vectorized operation using NumPy
+def sum_of_squares_vectorized(n):
+    arr = np.arange(n)
+    return np.sum(arr**2)
+
+# Testing the algorithms
+n = 10000
+
+# Measure time for original algorithm
+start_time = time.time()
+result_nested = sum_of_squares_nested(n)
+end_time = time.time()
+print(f"Nested Sum of Squares Result: {result_nested}, Time: {end_time - start_time:.5f} seconds")
+
+# Measure time for optimized algorithm
+start_time = time.time()
+result_optimized = sum_of_squares_optimized(n)
+end_time = time.time()
+print(f"Optimized Sum of Squares Result: {result_optimized}, Time: {end_time - start_time:.5f} seconds")
+
+# Measure time for vectorized algorithm
+start_time = time.time()
+result_vectorized = sum_of_squares_vectorized(n)
+end_time = time.time()
+print(f"Vectorized Sum of Squares Result: {result_vectorized}, Time: {end_time - start_time:.5f} seconds")
+____________________________________________________________________________________________

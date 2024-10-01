@@ -35,6 +35,20 @@ df_polars = pl.read_excel("https://github.com/manishjainstorage/Advanced-Python/
 print(f'Polars load time: {time.time() - start_time} seconds')
 ___________________________________________________________________________________
 
+def a(n):
+  i = 1
+  while i<=n:
+    yield i
+    i+=1
+
+gen = a(5)
+
+print(next(gen))
+print(next(gen))
+print(next(gen))
+print(next(gen))
+________________________________________________________________________
+
 
 
 

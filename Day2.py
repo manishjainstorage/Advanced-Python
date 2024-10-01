@@ -290,3 +290,34 @@ profile = ProfileReport(df, title="Pandas Profiling Report")
 profile.to_file("output.html")
 
 ________________________________________________________
+
+"""
+b. Using Line Profiler
+
+line_profiler is a third-party module that provides line-by-line profiling of functions.
+
+"""
+
+# Step 1: Install Line Profiler
+!pip install line_profiler
+
+# Step 2: Load the Line Profiler Extension
+%load_ext line_profiler
+
+# Step 3: Define the function to profile
+def my_function():
+    total = 0
+    for i in range(10000):
+        total += i ** 2
+    return total
+
+# Run the function first (optional)
+my_function()
+
+# Step 4: Use lprun to profile the function
+%lprun -f my_function my_function()
+
+
+_________________________________________________________________________________________
+
+

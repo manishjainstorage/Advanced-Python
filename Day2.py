@@ -202,4 +202,19 @@ print(result, error)
 
 _________________________________________________________________
 
+""" Utilize Vectorization
 
+Description: Replace explicit loops with NumPy's built-in array operations, 
+which are optimized and run in compiled C code"""
+
+import numpy as np
+
+# Instead of this:
+a = np.random.rand(1000000)
+b = np.random.rand(1000000)
+c = np.empty_like(a)
+for i in range(len(a)):
+    c[i] = a[i] + b[i]
+
+# Use vectorized operations:
+c = a + b  # Faster and more concise

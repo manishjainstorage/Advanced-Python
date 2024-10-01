@@ -158,7 +158,48 @@ print(result)
 
 ________________________________________________________________
 
+"""Using Numba
+
+Numba is a just-in-time (JIT) compiler that translates a subset of Python and NumPy 
+code into fast machine code. 
+
+It can significantly speed up array operations."""
+
+import numpy as np
+from numba import jit
+
+@jit(nopython=True)
+def add_arrays(a, b):
+    return a + b
+
+# Create large arrays
+a = np.random.rand(1000000)
+b = np.random.rand(1000000)
+
+# Call the JIT-compiled function
+c = add_arrays(a, b)
+print(c)
+
+_________________________________________________________________________
 
 
+"""SciPy for Scientific Computing
+
+SciPy builds on NumPy and provides additional functionality for optimization,
+ integration, interpolation, 
+and other scientific computations, often with vectorized implementations."""
+
+from scipy import integrate
+import numpy as np
+
+# Define a function
+def f(x):
+    return x**2
+
+# Vectorized integration
+result, error = integrate.quad(f, 0, 1)  # Integrates f(x) from 0 to 1
+print(result, error)
+
+_________________________________________________________________
 
 

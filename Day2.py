@@ -123,7 +123,22 @@ df
 _______________________________________________________________________________
 
 
+""" NumPy Array Operations
 
+NumPy is the fundamental package for numerical computing in Python.
+It provides powerful array objects and functions that support vectorization """
+
+import numpy as np
+
+# Create two large NumPy arrays
+a = np.random.rand(1000000)
+b = np.random.rand(1000000)
+
+# Element-wise addition (vectorized operation)
+c = a + b  # This operation is executed in C, making it faster than a Python loop
+print(c)
+
+_______________________________________________________________________________
 
 
 

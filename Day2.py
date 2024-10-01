@@ -278,3 +278,15 @@ def compute():
 cProfile.run('compute()')
 
 _____________________________________________________________________
+
+#!pip install pandas-profiling
+
+import pandas as pd
+from pandas_profiling import ProfileReport
+
+df = pd.read_csv("StockMarketData-13krows_csv.csv")
+
+profile = ProfileReport(df, title="Pandas Profiling Report")
+profile.to_file("output.html")
+
+________________________________________________________

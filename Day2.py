@@ -254,3 +254,27 @@ c = np.copy(a[1:3])  # Creates a new array
 
 ____________________________________________________________________________
 
+""" Use In-place Operations
+
+Description: Modify existing arrays in place to save memory and improve performance."""
+
+a = np.array([1, 2, 3])
+a += 1  # In-place addition, modifies a directly
+
+______________________________________________________________________________
+
+"""Profile Your Code
+
+Description: Use profiling tools like cProfile or line_profiler to identify bottlenecks
+ in your code and optimize those specific areas."""
+
+import cProfile
+
+def compute():
+    a = np.random.rand(1000000)
+    b = np.random.rand(1000000)
+    return a + b
+
+cProfile.run('compute()')
+
+_____________________________________________________________________

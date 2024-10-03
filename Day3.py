@@ -273,6 +273,46 @@ files.download('/content/scraped_data.txt')
 
 ________________________________________________________________________________________
 
+#!pip install aiohttp nest_asyncio
+
+import asyncio
+import aiohttp
+import nest_asyncio
+
+# Apply nest_asyncio to allow nested event loops
+nest_asyncio.apply()
+
+# List of API endpoints to call
+api_urls = [
+    "https://jsonplaceholder.typicode.com/posts/1",
+    "https://jsonplaceholder.typicode.com/posts/2",
+    "https://jsonplaceholder.typicode.com/posts/3",
+    # Add more API endpoints as needed
+]
+
+async def fetch(session, url):
+    async with session.get(url) as response:
+        # Check for successful response
+        if response.status == 200:
+            data = await response.json()  # Parse response as JSON
+            return data
+        return None
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch(session, url) for url in api_urls]
+        results = await asyncio.gather(*tasks)
+
+        # Process and print the results
+        for result in results:
+            if result is not None:
+                print(result)
+            else:
+                print("Failed to fetch data.")
+
+# Run the main function
+await main()
+
 
 ________________________________________________________________________________
 

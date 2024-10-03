@@ -144,3 +144,26 @@ end_time = time.time()
 print(f"Spark Result: {meanvaluenospark}, Time: {end_time - start_time:.5f} seconds")
 
 ______________________________________________________________________________________
+import dask.array as da
+import dask
+
+# Step 1: Create a large Dask array with chunking
+# Create an array of random numbers (e.g., 10 million elements) and chunk it into smaller arrays
+large_array = da.random.random(size=(10000000,), chunks=(1000000,))
+
+# Step 2: Define an optimized algorithm function
+def optimized_computation(x):
+    """A simple optimized computation: Calculate the square and then the mean."""
+    return da.mean(x ** 2)
+
+# Step 3: Perform the computation
+# Use Dask to apply the optimized function to the large array
+mean_result = optimized_computation(large_array)
+
+# Step 4: Trigger computation (this uses load balancing internally)
+result = mean_result.compute()  # This will execute the task in parallel, leveraging multiple cores
+
+# Step 5: Print the result
+print(f"The mean of the squares of the array is: {result}")
+________________________________________________________________________________
+

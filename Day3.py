@@ -163,6 +163,54 @@ mean_result = optimized_computation(large_array)
 # Step 4: Trigger computation (this uses load balancing internally)
 result = mean_result.compute()  # This will execute the task in parallel, leveraging multiple cores
 
+_______________________________________________________________________________________________________
+
+"""
+Event Loop:
+
+The asyncio library uses an event loop to schedule and run asynchronous tasks.
+The event loop manages when and how the coroutines are executed,
+providing concurrency without requiring multiple threads.
+
+Tasks:
+
+Coroutines can be wrapped into Task objects that run asynchronously.
+Tasks allow the program to execute multiple coroutines simultaneously (in an interleaved manner).
+"""
+
+"""
+Python program that demonstrates the use of the asyncio library and an event loop to schedule
+and run asynchronous tasks. This example
+will show how multiple coroutines can be executed concurrently without blocking the main thread:
+
+"""
+import asyncio
+
+# Define an asynchronous function that simulates a task
+async def task(name, delay):
+    print(f"Task {name} started")  # Indicate the task has started
+    await asyncio.sleep(delay)  # Simulate an I/O-bound operation (e.g., network request)
+    print(f"Task {name} completed after {delay} seconds")  # Indicate the task has completed
+
+# Define the main asynchronous function
+async def main():
+    # Create a list of tasks with varying delays
+    tasks = [
+        task("A", 2),  # Task A takes 2 seconds
+        task("B", 1),  # Task B takes 1 second
+        task("C", 3),  # Task C takes 3 seconds
+    ]
+
+    # Use asyncio.gather to run tasks concurrently
+    await asyncio.gather(*tasks)
+
+# Directly await the `main` function in Colab
+await main()
+
+_____________________________________________________________________________________________
+
+
+
 # Step 5: Print the result
 print(f"The mean of the squares of the array is: {result}")
 ________________________________________________________________________________

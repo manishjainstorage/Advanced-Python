@@ -347,3 +347,70 @@ async def main():
 # Run the main function
 await main()
 ________________________________________________________________
+
+
+!pip install sqlalchemy
+
+import sqlite3
+import pandas as pd
+from sqlalchemy import create_engine
+
+# Create a SQLite database connection
+conn = sqlite3.connect('example.db')
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Create a table
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS employees (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    department TEXT NOT NULL
+)
+''')
+
+# Function to insert data into the database
+def insert_data(data):
+    cursor.executemany('''
+    INSERT INTO employees (name, age, department) VALUES (?, ?, ?)
+    ''', data)
+    conn.commit()
+
+# Generate sample data
+sample_data = [
+    ("Alice", 30, "HR"),
+    ("Bob", 24, "Engineering"),
+    ("Charlie", 28, "Marketing"),
+    ("David", 35, "Engineering"),
+    ("Eve", 29, "HR"),
+    ("Frank", 32, "Marketing")
+]
+
+# Insert sample data into the database
+insert_data(sample_data)
+
+# Function to query data from the database
+def query_data():
+    return pd.read_sql_query('SELECT * FROM employees', conn)
+
+# Query and display the data
+dataframe = query_data()
+print("Data before optimization:")
+print(dataframe)
+
+# Optimize by creating an index on the department column
+cursor.execute('CREATE INDEX IF NOT EXISTS idx_department ON employees(department)')
+
+# Query data again to show optimization effect
+optimized_dataframe = pd.read_sql_query('SELECT * FROM employees WHERE department = "Engineering"', conn)
+print("\nData after optimization (filtered by department):")
+print(optimized_dataframe)
+
+# Clean up and close the connection
+conn.close()
+
+__________________________________________________________________
+
+

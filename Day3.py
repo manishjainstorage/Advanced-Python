@@ -101,4 +101,37 @@ print(expensive_function(5))  # Computes a different value
 print(f"Time taken: {time.time() - start_time} seconds")
 ________________________________________________________________________________
 
+!pip install dask[complete]
+import dask.array as da
+import dask
 
+# Create a large Dask array
+x = da.random.random((10000, 10000), chunks=(1000, 1000))
+
+# Perform a computation (e.g., mean)
+mean_result = x.mean()
+
+# Trigger the computation
+result = mean_result.compute()
+
+print(f"The mean of the array is: {result}")
+______________________________________________________
+
+import time
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import avg
+
+spark = SparkSession.builder.appName("example_spark").getOrCreate()
+
+data = [(i,i*2) for i in range(10000000)]
+
+columns = ["id" ,"value"]
+df = spark.createDataFrame(data, columns)
+
+start_time = time.time()
+result = df.select(avg("value")).collect()[0][0]
+end_time = time.time()
+
+print(f"Spark Result: {result}, Time: {end_time - start_time:.5f} seconds")
+
+____________________________________________________________________________________

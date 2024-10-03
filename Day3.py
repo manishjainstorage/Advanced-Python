@@ -211,7 +211,67 @@ await main()
 
 _____________________________________________________________________________________________
 
+#!pip install aiohttp beautifulsoup4 nest_asyncio
 
+import asyncio
+import aiohttp
+from bs4 import BeautifulSoup
+import nest_asyncio
+
+# Apply nest_asyncio to allow nested event loops
+nest_asyncio.apply()
+
+# List of URLs to scrape
+urls = [
+    "https://example.com",
+    "https://httpbin.org/get",
+    "https://quotes.toscrape.com/",
+    # Add more URLs as needed
+]
+
+async def fetch(session, url):
+    async with session.get(url) as response:
+        # Check for successful response
+        if response.status == 200:
+            html = await response.text()
+            return html
+        return None
+
+async def scrape(urls):
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch(session, url) for url in urls]
+        return await asyncio.gather(*tasks)
+
+def parse_html(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    title_tag = soup.title
+    # Check if the title tag exists and return its text; otherwise, return a default message
+    return title_tag.string if title_tag else "No title found"
+
+async def main():
+    # Scrape the URLs
+    html_responses = await scrape(urls)
+    results = []
+
+    for html in html_responses:
+        if html:
+            result = parse_html(html)
+            results.append(result)
+
+    # Save results to a text file
+    with open('/content/scraped_data.txt', 'w') as f:
+        for result in results:
+            f.write(result + '\n')
+
+# Run the main function using asyncio.run() in the already running event loop
+await main()
+
+# Download the scraped data file
+from google.colab import files
+files.download('/content/scraped_data.txt')
+
+
+________________________________________________________________________________________
 
 
 ________________________________________________________________________________

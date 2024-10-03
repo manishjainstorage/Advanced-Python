@@ -163,6 +163,8 @@ mean_result = optimized_computation(large_array)
 # Step 4: Trigger computation (this uses load balancing internally)
 result = mean_result.compute()  # This will execute the task in parallel, leveraging multiple cores
 
+# Step 5: Print the result
+print(f"The mean of the squares of the array is: {result}")
 _______________________________________________________________________________________________________
 
 """
@@ -211,7 +213,6 @@ ________________________________________________________________________________
 
 
 
-# Step 5: Print the result
-print(f"The mean of the squares of the array is: {result}")
+
 ________________________________________________________________________________
 

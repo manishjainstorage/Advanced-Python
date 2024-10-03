@@ -413,4 +413,90 @@ conn.close()
 
 __________________________________________________________________
 
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Step 1: Define height (X) and weight (y)
+height = np.array([171, 165, 145, 162, 156, 220, 156, 178])
+weight = np.array([80, 60, 80, 62, 65, 55, 99, 45])
+
+# Fit linear regression model
+clf = LinearRegression()
+clf.fit(height.reshape(-1, 1), weight)
+
+# Predict the weight for height = 136
+predicted_weight = clf.predict([[136]])
+print(f"Predicted weight for height 136 cm: {predicted_weight[0]:.2f} kg")
+
+# Plot the data and the regression line
+plt.scatter(height, weight, color='blue', label='Original Data')
+plt.plot(height, clf.predict(height.reshape(-1, 1)), color='red', label='Linear Regression Line')
+plt.xlabel('Height (cm)')
+plt.ylabel('Weight (kg)')
+plt.title('Height vs Weight')
+plt.legend()
+plt.show()
+
+_____________________________________________________________________
+import numpy as np
+import plotly.graph_objects as go
+from sklearn.linear_model import LinearRegression
+
+# Step 1: Data (Height and Weight)
+height = np.array([171, 165, 145, 162, 156, 220, 156, 178])
+weight = np.array([80, 60, 80, 62, 65, 55, 99, 45])
+
+# Step 2: Linear Regression using sklearn
+model = LinearRegression()
+model.fit(height.reshape(-1, 1), weight)
+
+# Predict weight for a given height (136 cm)
+predicted_weight = model.predict([[136]])
+print(f"Predicted weight for height 136 cm: {predicted_weight[0]:.2f} kg")
+
+# Step 3: Plot Original Data and Regression Line using Plotly
+# Create scatter plot for original data
+scatter_data = go.Scatter(x=height, y=weight, mode='markers', name='Original Data')
+
+# Create line plot for the regression line
+line_data = go.Scatter(x=height, y=model.predict(height.reshape(-1, 1)), mode='lines', name='Regression Line')
+
+# Display the plot
+fig = go.Figure([scatter_data, line_data])
+fig.update_layout(title='Height vs Weight (Linear Regression)',
+                  xaxis_title='Height (cm)', yaxis_title='Weight (kg)')
+fig.show()
+
+# Step 4: Simplified Gradient Descent
+def simple_gradient_descent(X, y, learning_rate=0.0001, iterations=1000):
+    m = len(y)
+    theta0 = 0  # Intercept (bias)
+    theta1 = 0  # Slope
+
+    for _ in range(iterations):
+        y_pred = theta0 + theta1 * X  # Linear prediction
+        d_theta0 = -(2/m) * np.sum(y - y_pred)  # Gradient for intercept
+        d_theta1 = -(2/m) * np.sum((y - y_pred) * X)  # Gradient for slope
+        theta0 -= learning_rate * d_theta0
+        theta1 -= learning_rate * d_theta1
+
+    return theta0, theta1
+
+# Perform Gradient Descent
+theta0, theta1 = simple_gradient_descent(height, weight)
+
+# Step 5: Optimized Prediction using Gradient Descent
+optimized_predicted_weight = theta0 + theta1 * 136
+print(f"Optimized predicted weight for height 136 cm: {optimized_predicted_weight:.2f} kg")
+
+# Step 6: Plot Optimized Line
+optimized_line_data = go.Scatter(x=height, y=theta0 + theta1 * height, mode='lines', name='Optimized Line (Gradient Descent)')
+
+# Display original data and optimized line
+fig_optimized = go.Figure([scatter_data, optimized_line_data])
+fig_optimized.update_layout(title='Height vs Weight (Optimized Regression Line)',
+                            xaxis_title='Height (cm)', yaxis_title='Weight (kg)')
+fig_optimized.show()
+
 

@@ -135,3 +135,12 @@ end_time = time.time()
 print(f"Spark Result: {result}, Time: {end_time - start_time:.5f} seconds")
 
 ____________________________________________________________________________________
+
+import time
+data = [(i,i*2) for i in range(10000000)]
+start_time = time.time()
+meanvaluenospark = sum([x[1] for x in data])/len(data)
+end_time = time.time()
+print(f"Spark Result: {meanvaluenospark}, Time: {end_time - start_time:.5f} seconds")
+
+______________________________________________________________________________________

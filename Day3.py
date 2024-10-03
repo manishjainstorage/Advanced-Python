@@ -499,4 +499,46 @@ fig_optimized.update_layout(title='Height vs Weight (Optimized Regression Line)'
                             xaxis_title='Height (cm)', yaxis_title='Weight (kg)')
 fig_optimized.show()
 
+_______________________________________________________________________________________________
 
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# Create sample stock market data
+np.random.seed(42)
+
+# Generate synthetic stock data for 1000 days
+data = {
+    'open': np.random.uniform(100, 200, 1000),  # Opening price
+    'high': np.random.uniform(100, 200, 1000),  # High price
+    'low': np.random.uniform(100, 200, 1000),   # Low price
+    'close': np.random.uniform(100, 200, 1000), # Closing price
+    'volume': np.random.uniform(1000, 10000, 1000), # Volume traded
+}
+
+df = pd.DataFrame(data)
+
+# Create a target variable: 1 if price increased, 0 if price decreased
+df['price_increase'] = np.where(df['close'] > df['open'], 1, 0)
+
+# Let's assume we want to recommend 'Buy' if the price increases and 'Not Buy' otherwise.
+X = df[['open', 'high', 'low', 'volume']]
+y = df['price_increase']
+
+# Split data into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train a Decision Tree Classifier
+clf = DecisionTreeClassifier(random_state=42)
+clf.fit(X_train, y_train)
+
+# Make predictions
+y_pred = clf.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Initial Accuracy: {accuracy * 100:.2f}%")
+________________________________________________________________________________________________

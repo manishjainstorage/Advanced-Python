@@ -47,4 +47,24 @@ if __name__ == "__main__":
     # This call will be cached, so no delay
     print(fetch_data_from_db("SELECT * FROM users WHERE id = 1"))
 ___________________________________________________________________________________________________
+def memoize(func):
+    cache = {}
 
+    def wrapper(n):
+        if n not in cache:
+            cache[n] = func(n)
+        return cache[n]
+
+    return wrapper
+
+@memoize
+def fibonacci(n):
+    """Calculates the nth Fibonacci number."""
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Using the memoized Fibonacci function
+print(fibonacci(10))  # Computes the value
+print(fibonacci(10))  # Retrieves from cache
+_________________________________________________________________________________________________

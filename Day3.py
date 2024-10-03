@@ -316,3 +316,34 @@ await main()
 
 ________________________________________________________________________________
 
+#!pip install aiofiles
+
+import asyncio
+import aiofiles
+
+# Function to write data to a file asynchronously
+async def write_large_file(filename, data):
+    async with aiofiles.open(filename, mode='w') as f:
+        await f.write(data)
+
+# Function to read data from a file asynchronously
+async def read_large_file(filename):
+    async with aiofiles.open(filename, mode='r') as f:
+        content = await f.read()
+        return content
+
+async def main():
+    filename = '/content/scraped_data.txt'
+
+    # Simulate writing large data
+    large_data = "This is a line in the file.\n" * 10000  # Example large data
+    await write_large_file(filename, large_data)
+    print(f"Written to {filename}.")
+
+    # Read the data back from the file
+    content = await read_large_file(filename)
+    print(f"Read from {filename}: {content[:100]}...")  # Print the first 100 characters
+
+# Run the main function
+await main()
+________________________________________________________________

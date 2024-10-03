@@ -68,3 +68,37 @@ def fibonacci(n):
 print(fibonacci(10))  # Computes the value
 print(fibonacci(10))  # Retrieves from cache
 _________________________________________________________________________________________________
+
+"""
+Below is an example demonstrating how to cache results using joblib.Memory.
+This will save the results of an expensive function call to disk,
+ so it can be reused in subsequent calls with the same arguments.
+"""
+
+from joblib import Memory
+import time
+
+# Create a Memory object to store cache results
+memory = Memory('./cachedir', verbose=0)
+
+@memory.cache
+def expensive_function(n):
+    """Simulates an expensive computation."""
+    time.sleep(2)  # Simulate a delay
+    return n * n
+
+# Using the cached function
+start_time = time.time()
+print(expensive_function(4))  # First call, computes the value
+print(f"Time taken: {time.time() - start_time} seconds")
+
+start_time = time.time()
+print(expensive_function(4))  # Second call, retrieves from cache
+print(f"Time taken: {time.time() - start_time} seconds")
+
+start_time = time.time()
+print(expensive_function(5))  # Computes a different value
+print(f"Time taken: {time.time() - start_time} seconds")
+________________________________________________________________________________
+
+

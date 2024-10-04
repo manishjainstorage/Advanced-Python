@@ -210,3 +210,128 @@ plt.grid()
 plt.show()
 
 ____________________________________________________________
+
+!pip install plotly
+
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+import numpy as np
+
+# Generate date range
+dates = pd.date_range(start='2024-09-01', end='2024-09-30', freq='D')
+
+# Create demo data: simulating stock prices
+np.random.seed(42)  # For reproducibility
+prices = np.random.normal(loc=100, scale=5, size=len(dates)).cumsum()
+
+# Create DataFrame
+data = pd.DataFrame(data={'Date': dates, 'Stock Price': prices})
+
+# Set Date as the index
+data.set_index('Date', inplace=True)
+
+
+# Plotting the time series data with Plotly
+fig1 = go.Figure()
+
+fig1.add_trace(go.Scatter(
+    x=data.index,
+    y=data['Stock Price'],
+    mode='lines+markers',
+    name='Stock Price',
+    marker=dict(color='blue')
+))
+
+fig1.update_layout(
+    title='Simulated Daily Stock Prices for September 2024',
+    xaxis_title='Date',
+    yaxis_title='Stock Price',
+    template='plotly_white'
+)
+
+fig1.show()
+
+
+# Resample the data to weekly frequency and calculate the mean
+weekly_data = data.resample('W').mean()
+
+# Plotting the weekly average stock prices
+fig2 = go.Figure()
+
+fig2.add_trace(go.Scatter(
+    x=weekly_data.index,
+    y=weekly_data['Stock Price'],
+    mode='lines+markers',
+    name='Weekly Average Stock Price',
+    marker=dict(color='orange')
+))
+
+fig2.update_layout(
+    title='Weekly Average Stock Prices for September 2024',
+    xaxis_title='Date',
+    yaxis_title='Weekly Average Stock Price',
+    template='plotly_white'
+)
+
+fig2.show()
+
+
+# Plotting the observed stock prices for decomposition
+fig3 = go.Figure()
+
+fig3.add_trace(go.Scatter(
+    x=data.index,
+    y=data['Stock Price'],
+    mode='lines+markers',
+    name='Observed',
+    marker=dict(color='green')
+))
+
+fig3.update_layout(
+    title='Observed Stock Prices',
+    xaxis_title='Date',
+    yaxis_title='Stock Price',
+    template='plotly_white'
+)
+
+fig3.show()
+
+
+# Calculate moving average
+data['Moving Average'] = data['Stock Price'].rolling(window=7).mean()
+
+# Plotting original and moving average
+fig4 = go.Figure()
+
+fig4.add_trace(go.Scatter(
+    x=data.index,
+    y=data['Stock Price'],
+    mode='lines+markers',
+    name='Original',
+    line=dict(color='blue', width=2),
+    marker=dict(size=5)
+))
+
+fig4.add_trace(go.Scatter(
+    x=data.index,
+    y=data['Moving Average'],
+    mode='lines',
+    name='7-Day Moving Average',
+    line=dict(color='orange', width=2)
+))
+
+fig4.update_layout(
+    title='Stock Prices with 7-Day Moving Average',
+    xaxis_title='Date',
+    yaxis_title='Stock Price',
+    template='plotly_white'
+)
+
+fig4.show()
+
+
+
+
+
+

@@ -330,7 +330,101 @@ fig4.update_layout(
 
 fig4.show()
 
+_____________________________________________
 
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+
+# Step 1: Create Sample Data
+dates = pd.date_range(start='2024-01-01', periods=20)
+np.random.seed(42)
+prices = np.random.randint(100, 200, size=len(dates))
+
+data = pd.DataFrame(data={'Date': dates, 'Price': prices})
+data.set_index('Date', inplace=True)
+
+# Step 2: Calculate Moving Averages
+data['SMA_3'] = data['Price'].rolling(window=3).mean()  # 3-day SMA
+data['SMA_5'] = data['Price'].rolling(window=5).mean()  # 5-day SMA
+weights = np.arange(1, 4)  # For a 3-day window
+data['WMA_3'] = data['Price'].rolling(window=3).apply(lambda x: np.dot(x, weights)/weights.sum(), raw=True)
+
+# Step 3: Plot with Plotly
+fig = go.Figure()
+
+# Add traces for original prices and moving averages
+fig.add_trace(go.Scatter(x=data.index, y=data['Price'], mode='lines+markers', name='Original Price', line=dict(color='blue')))
+fig.add_trace(go.Scatter(x=data.index, y=data['SMA_3'], mode='lines+markers', name='3-Day SMA', line=dict(dash='dash', color='orange')))
+fig.add_trace(go.Scatter(x=data.index, y=data['SMA_5'], mode='lines+markers', name='5-Day SMA', line=dict(dash='dash', color='green')))
+fig.add_trace(go.Scatter(x=data.index, y=data['WMA_3'], mode='lines+markers', name='3-Day WMA', line=dict(dash='dot', color='red')))
+
+# Update layout
+fig.update_layout(
+    title='Moving Averages',
+    xaxis_title='Date',
+    yaxis_title='Price',
+    legend_title='Legend',
+    template='plotly_white'
+)
+
+# Show the plot
+fig.show()
+
+__________________________________________________________
+
+pip install pyarrow
+
+import pyarrow as pa
+
+# Create an Arrow array
+data = pa.array([1, 2, 3, 4, 5])
+print(data)
+
+# Create an Arrow table
+table = pa.table({'column1': data, 'column2': pa.array(['A', 'B', 'C', 'D', 'E'])})
+print(table)
+
+import pyarrow.parquet as pq
+
+# Create a sample Arrow table
+data = {
+    'column1': pa.array([1, 2, 3]),
+    'column2': pa.array(['A', 'B', 'C'])
+}
+table = pa.table(data)
+
+# Write the table to a Parquet file
+pq.write_table(table, 'example.parquet')
+
+# Read the table back from the Parquet file
+read_table = pq.read_table('example.parquet')
+print(read_table)
+
+import pandas as pd
+
+# Create a sample Pandas DataFrame
+df = pd.DataFrame({
+    'A': [1, 2, 3],
+    'B': ['X', 'Y', 'Z']
+})
+
+# Convert Pandas DataFrame to Arrow Table
+arrow_table = pa.Table.from_pandas(df)
+print(arrow_table)
+
+# Convert Arrow Table back to Pandas DataFrame
+df_from_arrow = arrow_table.to_pandas()
+print(df_from_arrow)
+
+# Create an Arrow array
+data = pa.array([1, 2, 3, 4, 5])
+
+# Convert to NumPy array without copying data
+numpy_array = data.to_numpy(zero_copy_only=True)
+print(numpy_array)
+
+_______________________________________________________________________
 
 
 

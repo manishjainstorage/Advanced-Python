@@ -126,6 +126,41 @@ plt.show()
 weekly_data = data.resample('W').mean()
 
 print(weekly_data)
+_______________________________________________________________________________
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+# Generate date range
+dates = pd.date_range(start='2024-09-01', end='2024-09-30', freq='D')
+
+# Create demo data: simulating stock prices
+np.random.seed(42)  # For reproducibility
+prices = np.random.normal(loc=100, scale=5, size=len(dates)).cumsum()
+
+# Create DataFrame
+data = pd.DataFrame(data={'Date': dates, 'Stock Price': prices})
+
+# Set Date as the index
+data.set_index('Date', inplace=True)
+print(data.head())
+
+
+
+# Plot the time series data
+plt.figure(figsize=(12, 6))
+plt.plot(data.index, data['Stock Price'], marker='o', linestyle='-')
+plt.title('Simulated Daily Stock Prices for September 2024')
+plt.xlabel('Date')
+plt.ylabel('Stock Price')
+plt.grid()
+plt.show()
+
+# Resample the data to weekly frequency and calculate the mean
+weekly_data = data.resample('W').mean()
+print(weekly_data)
+
+
 
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots

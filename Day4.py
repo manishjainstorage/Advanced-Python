@@ -192,3 +192,21 @@ fig.update_xaxes(title_text='Date', row=4, col=1)
 fig.show()
 __________________________________________________________
 
+"""Moving Average
+Calculate and visualize a moving average to smooth out the fluctuations."""
+
+# Calculate moving average
+data['Moving Average'] = data['Stock Price'].rolling(window=7).mean()
+
+# Plot original and moving average
+plt.figure(figsize=(12, 6))
+plt.plot(data['Stock Price'], label='Original', alpha=0.5)
+plt.plot(data['Moving Average'], label='7-Day Moving Average', color='orange')
+plt.title('Stock Prices with Moving Average')
+plt.xlabel('Date')
+plt.ylabel('Stock Price')
+plt.legend()
+plt.grid()
+plt.show()
+
+____________________________________________________________
